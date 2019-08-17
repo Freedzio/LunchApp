@@ -37,12 +37,54 @@ class Mainscreen extends React.Component<MainscreenProps, MainscreenState> {
                 vege: '',
             }
         }
+
+        this.getRandomIndex = this.getRandomIndex.bind(this)
+        this.generateLunches = this.generateLunches.bind(this)
+    }   
+
+    getRandomIndex(amount: number) {
+        var randomIndex
+
+        randomIndex = Math.floor(Math.random() * amount)
+
+        return randomIndex
     }
+
     generateLunches() {
         var soupsAmount = soups.length
         var mainsAmount = mainCourses.length
         var fridaysAmount = fridayCourses.length
         var vegeAmount = vege.length
+
+        var stateProps = {
+            day1: {
+                soup: soups[this.getRandomIndex(soupsAmount)],
+                main: mainCourses[this.getRandomIndex(mainsAmount)],
+                vege: vege[this.getRandomIndex(vegeAmount)],
+            },
+            day2: {
+                soup: soups[this.getRandomIndex(soupsAmount)],
+                main: mainCourses[this.getRandomIndex(mainsAmount)],
+                vege: vege[this.getRandomIndex(vegeAmount)],
+            },
+            day3: {
+                soup: soups[this.getRandomIndex(soupsAmount)],
+                main: mainCourses[this.getRandomIndex(mainsAmount)],
+                vege: vege[this.getRandomIndex(vegeAmount)],
+            },
+            day4: {
+                soup: soups[this.getRandomIndex(soupsAmount)],
+                main: mainCourses[this.getRandomIndex(mainsAmount)],
+                vege: vege[this.getRandomIndex(vegeAmount)],
+            },
+            day5: {
+                soup: soups[this.getRandomIndex(soupsAmount)],
+                main: fridayCourses[this.getRandomIndex(fridaysAmount)],
+                vege: vege[this.getRandomIndex(vegeAmount)],
+            }
+        }
+
+        this.setState(stateProps)
 
     }
 
@@ -51,37 +93,37 @@ class Mainscreen extends React.Component<MainscreenProps, MainscreenState> {
             <Container>
                 <Row>
                     <Col lg='12' className='centered'>
-                        <Button color='primary'>Generuj lunche</Button>
+                        <Button color='primary' onClick={this.generateLunches}>Generuj lunche</Button>
                     </Col>
                 </Row>
                 <Row>
                     <Col lg='12'>
                         <div>
-                            <p>Poniedziałek</p>
+                            <p className='font-weight-bold'>Poniedziałek</p>
                             <p>{this.state.day1.soup}</p>
                             <p>{this.state.day1.main}</p>
                             <p>{this.state.day1.vege}</p>
                         </div>
                         <div>
-                            <p>Wtorek</p>
+                            <p className='font-weight-bold'>Wtorek</p>
                             <p>{this.state.day2.soup}</p>
                             <p>{this.state.day2.main}</p>
                             <p>{this.state.day2.vege}</p>
                         </div>
                         <div>
-                            <p>Środa</p>
+                            <p className='font-weight-bold'>Środa</p>
                             <p>{this.state.day3.soup}</p>
                             <p>{this.state.day3.main}</p>
                             <p>{this.state.day3.vege}</p>
                         </div>
                         <div>
-                            <p>Czwartek</p>
+                            <p className='font-weight-bold'>Czwartek</p>
                             <p>{this.state.day4.soup}</p>
                             <p>{this.state.day4.main}</p>
                             <p>{this.state.day4.vege}</p>
                         </div>
                         <div>
-                            <p>Piątek</p>
+                            <p className='font-weight-bold'>Piątek</p>
                             <p>{this.state.day5.soup}</p>
                             <p>{this.state.day5.main}</p>
                             <p>{this.state.day5.vege}</p>
