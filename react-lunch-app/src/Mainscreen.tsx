@@ -4,6 +4,7 @@ import soups from './database/soups'
 import mainCourses from './database/mainCourses'
 import fridayCourses from './database/fridayCourses'
 import vege from './database/vege'
+import generate from '@babel/generator';
 
 class Mainscreen extends React.Component<MainscreenProps, MainscreenState> {
     constructor(props: any) {
@@ -40,7 +41,8 @@ class Mainscreen extends React.Component<MainscreenProps, MainscreenState> {
 
         this.getRandomIndex = this.getRandomIndex.bind(this)
         this.generateLunches = this.generateLunches.bind(this)
-    }   
+        this.generateDay = this.generateDay.bind(this)
+    }
 
     getRandomIndex(amount: number) {
         var randomIndex
@@ -50,38 +52,43 @@ class Mainscreen extends React.Component<MainscreenProps, MainscreenState> {
         return randomIndex
     }
 
-    generateLunches() {
+    generateDay(friday: boolean) {
         var soupsAmount = soups.length
         var mainsAmount = mainCourses.length
-        var fridaysAmount = fridayCourses.length
         var vegeAmount = vege.length
+        var fridaysAmount = fridayCourses.length
 
-        var stateProps = {
-            day1: {
-                soup: soups[this.getRandomIndex(soupsAmount)],
-                main: mainCourses[this.getRandomIndex(mainsAmount)],
-                vege: vege[this.getRandomIndex(vegeAmount)],
-            },
-            day2: {
-                soup: soups[this.getRandomIndex(soupsAmount)],
-                main: mainCourses[this.getRandomIndex(mainsAmount)],
-                vege: vege[this.getRandomIndex(vegeAmount)],
-            },
-            day3: {
-                soup: soups[this.getRandomIndex(soupsAmount)],
-                main: mainCourses[this.getRandomIndex(mainsAmount)],
-                vege: vege[this.getRandomIndex(vegeAmount)],
-            },
-            day4: {
-                soup: soups[this.getRandomIndex(soupsAmount)],
-                main: mainCourses[this.getRandomIndex(mainsAmount)],
-                vege: vege[this.getRandomIndex(vegeAmount)],
-            },
-            day5: {
+        var day = {
+            soup: '',
+            main: '',
+            vege: ''
+        }
+
+        if (friday) {
+            day = {
                 soup: soups[this.getRandomIndex(soupsAmount)],
                 main: fridayCourses[this.getRandomIndex(fridaysAmount)],
-                vege: vege[this.getRandomIndex(vegeAmount)],
+                vege: vege[this.getRandomIndex(vegeAmount)]
             }
+        } else {
+            day = {
+                soup: soups[this.getRandomIndex(soupsAmount)],
+                main: mainCourses[this.getRandomIndex(mainsAmount)],
+                vege: vege[this.getRandomIndex(vegeAmount)]
+            }
+        }
+
+        return day
+    }
+
+    generateLunches() {
+        var stateProps = {
+            generated: true,
+            day1: this.generateDay(false),
+            day2: this.generateDay(false),
+            day3: this.generateDay(false),
+            day4: this.generateDay(false),
+            day5: this.generateDay(true)
         }
 
         this.setState(stateProps)
@@ -90,44 +97,42 @@ class Mainscreen extends React.Component<MainscreenProps, MainscreenState> {
 
     render() {
         return (
-            <Container>
-                <Row>
-                    <Col lg='12' className='centered'>
-                        <Button color='primary' onClick={this.generateLunches}>Generuj lunche</Button>
-                    </Col>
-                </Row>
-                <Row>
+            <Container className='centered'>
+                <Row className='child text-center'>
                     <Col lg='12'>
-                        <div>
-                            <p className='font-weight-bold'>Poniedziałek</p>
-                            <p>{this.state.day1.soup}</p>
-                            <p>{this.state.day1.main}</p>
-                            <p>{this.state.day1.vege}</p>
-                        </div>
-                        <div>
-                            <p className='font-weight-bold'>Wtorek</p>
-                            <p>{this.state.day2.soup}</p>
-                            <p>{this.state.day2.main}</p>
-                            <p>{this.state.day2.vege}</p>
-                        </div>
-                        <div>
-                            <p className='font-weight-bold'>Środa</p>
-                            <p>{this.state.day3.soup}</p>
-                            <p>{this.state.day3.main}</p>
-                            <p>{this.state.day3.vege}</p>
-                        </div>
-                        <div>
-                            <p className='font-weight-bold'>Czwartek</p>
-                            <p>{this.state.day4.soup}</p>
-                            <p>{this.state.day4.main}</p>
-                            <p>{this.state.day4.vege}</p>
-                        </div>
-                        <div>
-                            <p className='font-weight-bold'>Piątek</p>
-                            <p>{this.state.day5.soup}</p>
-                            <p>{this.state.day5.main}</p>
-                            <p>{this.state.day5.vege}</p>
-                        </div>
+                        <Button color='primary' onClick={this.generateLunches}>Generuj lunche</Button>
+                        {!!this.state.generated && <div>
+                            <div>
+                                <p className='font-weight-bold'>Poniedziałek</p>
+                                <p>{this.state.day1.soup}</p>
+                                <p>{this.state.day1.main}</p>
+                                <p>{this.state.day1.vege}</p>
+                            </div>
+                            <div>
+                                <p className='font-weight-bold'>Wtorek</p>
+                                <p>{this.state.day2.soup}</p>
+                                <p>{this.state.day2.main}</p>
+                                <p>{this.state.day2.vege}</p>
+                            </div>
+                            <div>
+                                <p className='font-weight-bold'>Środa</p>
+                                <p>{this.state.day3.soup}</p>
+                                <p>{this.state.day3.main}</p>
+                                <p>{this.state.day3.vege}</p>
+                            </div>
+                            <div>
+                                <p className='font-weight-bold'>Czwartek</p>
+                                <p>{this.state.day4.soup}</p>
+                                <p>{this.state.day4.main}</p>
+                                <p>{this.state.day4.vege}</p>
+                            </div>
+                            <div>
+                                <p className='font-weight-bold'>Piątek</p>
+                                <p>{this.state.day5.soup}</p>
+                                <p>{this.state.day5.main}</p>
+                                <p>{this.state.day5.vege}</p>
+                            </div>
+                        </div>}
                     </Col>
                 </Row>
             </Container>
@@ -166,7 +171,7 @@ interface MainscreenState {
         main: string,
         vege: string
     },
-    
+
 }
 
 export default Mainscreen

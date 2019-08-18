@@ -7,7 +7,10 @@ var mainCourses = [
     'Gulasz wołowy',
     'Kotlet de volaille',
     'Pulled pork z frytkami',
-    'Duszona wątróbka'
+    'Duszona wątróbka',
+    'Polędwiczka wieprzowa w sosie grzybowym',
+    'Sznycel z indyka',
+    'Kotlet słoneczny'
 ]
 
 export default mainCourses
