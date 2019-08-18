@@ -1,0 +1,8 @@
+.centered {
+    display: flex;
+    flex-direction: column
+}
+
+.child {
+    margin: auto
+}
