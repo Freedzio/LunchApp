@@ -4,7 +4,6 @@ import soups from './database/soups'
 import mainCourses from './database/mainCourses'
 import fridayCourses from './database/fridayCourses'
 import vege from './database/vege'
-import generate from '@babel/generator';
 
 class Mainscreen extends React.Component<MainscreenProps, MainscreenState> {
     constructor(props: any) {
