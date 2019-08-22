@@ -1,5 +1,5 @@
 var mainCourses = [
-    'Kotlet Mielony',
+    'Kotlet mielony',
     'Nuggetsy z kurczaka',
     'Potrawka z kurczaka z ryżem',
     'Pieczone udko kurczaka',

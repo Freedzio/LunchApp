@@ -5,6 +5,7 @@ import mainCourses from './database/mainCourses'
 import fridayCourses from './database/fridayCourses'
 import vege from './database/vege'
 import days from './database/weekDays';
+import getRandomIndex from './common/getRandomIndex'
 
 class Mainscreen extends React.Component<MainscreenProps, MainscreenState> {
     constructor(props: any) {
@@ -15,14 +16,12 @@ class Mainscreen extends React.Component<MainscreenProps, MainscreenState> {
             menu: []
         }
 
-        this.getRandomIndex = this.getRandomIndex.bind(this)
+        
         this.generateLunches = this.generateLunches.bind(this)
         this.generateDay = this.generateDay.bind(this)
     }
 
-    getRandomIndex(amount: number) {
-        return Math.floor(Math.random() * amount)
-    }
+    
 
     generateDay(friday: boolean) {
         var soupsAmount = soups.length
@@ -32,15 +31,15 @@ class Mainscreen extends React.Component<MainscreenProps, MainscreenState> {
 
         if (friday) {
             return {
-                soup: soups[this.getRandomIndex(soupsAmount)],
-                main: fridayCourses[this.getRandomIndex(fridaysAmount)],
-                vege: vege[this.getRandomIndex(vegeAmount)]
+                soup: soups[getRandomIndex(soupsAmount)],
+                main: fridayCourses[getRandomIndex(fridaysAmount)],
+                vege: vege[getRandomIndex(vegeAmount)]
             }
         } else {
             return {
-                soup: soups[this.getRandomIndex(soupsAmount)],
-                main: mainCourses[this.getRandomIndex(mainsAmount)],
-                vege: vege[this.getRandomIndex(vegeAmount)]
+                soup: soups[getRandomIndex(soupsAmount)],
+                main: mainCourses[getRandomIndex(mainsAmount)],
+                vege: vege[getRandomIndex(vegeAmount)]
             }
         }
     }
