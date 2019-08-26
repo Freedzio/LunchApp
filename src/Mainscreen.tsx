@@ -1,14 +1,15 @@
 import * as React from 'react'
-import { Button, Row, Col, Container } from 'reactstrap'
+import { Row, Col, Container } from 'reactstrap'
 import soups from './database/soups'
 import mainCourses from './database/mainCourses'
 import fridayCourses from './database/fridayCourses'
 import vege from './database/vege'
-import days from './database/weekDays';
 import getRandomIndex from './common/getRandomIndex'
 import thursdayCourses from './database/thursdayCourses'
 import sides from './database/sides'
 import carbs from './database/carbs';
+import GenerateButton from './Button';
+import Menu from './Menu';
 
 class Mainscreen extends React.Component<MainscreenProps, MainscreenState> {
     constructor(props: any) {
@@ -49,13 +50,11 @@ class Mainscreen extends React.Component<MainscreenProps, MainscreenState> {
         var soupsAmount = soups.length
         var vegeAmount = vege.length
 
-        var dayProps = {
+        return {
             soup: soups[getRandomIndex(soupsAmount)],
             main: this.generateMainCourse(day),
             vege: vege[getRandomIndex(vegeAmount)]
         }
-
-        return dayProps
     }
 
     generateLunches() {
@@ -78,17 +77,8 @@ class Mainscreen extends React.Component<MainscreenProps, MainscreenState> {
             <Container className='centered'>
                 <Row className='child text-center'>
                     <Col lg='12'>
-                        <Button color='primary' onClick={this.generateLunches}>Generuj lunche</Button>
-                        {!!this.state.generated && <div>
-                            {this.state.menu.map((day, index) =>
-                                <div>
-                                    <p className='font-weight-bold'>{days[index]}</p>
-                                    <p>{day.soup}</p>
-                                    <p>{day.main}</p>
-                                    <p>{day.vege}</p>
-                                </div>
-                            )}
-                        </div>}
+                        <GenerateButton generateLunches={this.generateLunches} />
+                        {!!this.state.generated && <Menu menu={this.state.menu} />}
                     </Col>
                 </Row>
             </Container>
