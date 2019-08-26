@@ -6,6 +6,9 @@ import fridayCourses from './database/fridayCourses'
 import vege from './database/vege'
 import days from './database/weekDays';
 import getRandomIndex from './common/getRandomIndex'
+import thursdayCourses from './database/thursdayCourses'
+import sides from './database/sides'
+import carbs from './database/carbs';
 
 class Mainscreen extends React.Component<MainscreenProps, MainscreenState> {
     constructor(props: any) {
@@ -16,43 +19,54 @@ class Mainscreen extends React.Component<MainscreenProps, MainscreenState> {
             menu: []
         }
 
-        
+
         this.generateLunches = this.generateLunches.bind(this)
         this.generateDay = this.generateDay.bind(this)
+        this.generateMainCourse = this.generateMainCourse.bind(this)
     }
 
-    
-
-    generateDay(friday: boolean) {
-        var soupsAmount = soups.length
+    generateMainCourse(day?: string) {
         var mainsAmount = mainCourses.length
-        var vegeAmount = vege.length
+        var thursdaysAmount = thursdayCourses.length
         var fridaysAmount = fridayCourses.length
+        var sidesAmount = sides.length
+        var carbsAmount = carbs.length
 
-        if (friday) {
-            return {
-                soup: soups[getRandomIndex(soupsAmount)],
-                main: fridayCourses[getRandomIndex(fridaysAmount)],
-                vege: vege[getRandomIndex(vegeAmount)]
-            }
-        } else {
-            return {
-                soup: soups[getRandomIndex(soupsAmount)],
-                main: mainCourses[getRandomIndex(mainsAmount)],
-                vege: vege[getRandomIndex(vegeAmount)]
-            }
+        if (day === undefined) {
+            return mainCourses[getRandomIndex(mainsAmount)] + ', ' + sides[getRandomIndex(sidesAmount)] + ', ' + carbs[getRandomIndex(carbsAmount)]
         }
+
+        if (day === 'thursday') {
+            return thursdayCourses[getRandomIndex(thursdaysAmount)]
+        }
+
+        if (day === 'friday') {
+            return fridayCourses[getRandomIndex(fridaysAmount)] + ', ' + sides[getRandomIndex(sidesAmount)] + ', ' + carbs[getRandomIndex(carbsAmount)]
+        }
+    }
+
+    generateDay(day?: string) {
+        var soupsAmount = soups.length
+        var vegeAmount = vege.length
+
+        var dayProps = {
+            soup: soups[getRandomIndex(soupsAmount)],
+            main: this.generateMainCourse(day),
+            vege: vege[getRandomIndex(vegeAmount)]
+        }
+
+        return dayProps
     }
 
     generateLunches() {
         var stateProps = {
             generated: true,
             menu: [
-                this.generateDay(false),
-                this.generateDay(false),
-                this.generateDay(false),
-                this.generateDay(false),
-                this.generateDay(true)
+                this.generateDay(),
+                this.generateDay(),
+                this.generateDay(),
+                this.generateDay('thursday'),
+                this.generateDay('friday')
             ]
         }
 
