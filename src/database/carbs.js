@@ -5,7 +5,12 @@ var carbs = [
     'pieczony ziemniak',
     'ryż',
     'kasza gryczana',
-    'pęczak'
+    'pęczak',
+    'pommes noisettes',
+    'talarki ziemniaczane',
+    'czarna soczewica',
+    'kasza kuskus',
+    'kasza bulgur'
 ]
 
 export default carbs

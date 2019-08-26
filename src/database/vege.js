@@ -6,7 +6,27 @@ var vege = [
     'Tortilla grecka',
     'Mieszane sałaty z grillowanym serem halloumi',
     'Risotto z grzybami',
-    
+    'Pierogi z pieczarkami',
+    'Pierogi z młodą kapustą',
+    'Pierogi z serem',
+    'Naleśniki szpinakowe z warzywami',
+    'Naleśniki z serem',
+    'Warzywa grilowane zapiekane z sosem pomidorowym i parmezanem',
+    'Mieszane sałaty, marynowany burak, owoce',
+    'Mieszane sałaty, ser lazur, winogrona, pomidor suszony',
+    'Gnocchi ze szpinakiem w sosie śmietanowym',
+    'Kopytka w sosie grzybowym, pomidory cherry, rukola',
+    'Grillowane roladki z cukinii z serkiem ziołowym i suszonym pomidorem',
+    'Carpaccio z buraka',
+    'Makaron w sosie pomidorowym z mozzarellą',
+    'Sałatka grecka',
+    'Sałatka cezar z grillowaną cukinią',
+    'Sałatka z wędzonym łososiem, kaparami i jajkiem',
+    'Quesadilla cztery sery',
+    'Pierogi ruskie w cieście szpinakowym',
+    'Placki ziemniaczane z łososiem wędzonym',
+    'Placki ziemniaczane ze śmietaną i cukrem',
+    'Sałatka tabbouleh'
 ]
 
 export default vege

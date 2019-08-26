@@ -14,7 +14,22 @@ var soups = [
     'Grochówka',
     'Gulaszowa z kolendrą',
     'Brokułowa',
-    'Zupa serowa'
+    'Neapolitańska zupa serowa',
+    'Krem pomidorowy',
+    'Krem z białych warzyw',
+    'Krem z brokuła',
+    'Minestrone',
+    'Zupa jarzynowa',
+    'Krem pomidorowy na chlebie',
+    'Flaki z boczniaka',
+    'Zupa myśliwska z ogórkiem kiszonym i śmietaną',
+    'Krem z ziemniaka',
+    'Solanka',
+    'Tajska zupa z kurczakiem',
+    'Szczawiowa z jajkem',
+    'Gazpacho',
+    'Barszcz ukraiński',
+    'Zupa porowa'
 ]
 
 export default soups
