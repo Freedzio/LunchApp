@@ -34,7 +34,13 @@ class Mainscreen extends React.Component<MainscreenProps, MainscreenState> {
         var carbsAmount = carbs.length
 
         if (day === undefined) {
-            return mainCourses[getRandomIndex(mainsAmount)] + ', ' + sides[getRandomIndex(sidesAmount)] + ', ' + carbs[getRandomIndex(carbsAmount)]
+            var course = [
+                mainCourses[getRandomIndex(mainsAmount)],
+                sides[getRandomIndex(sidesAmount)],
+                carbs[getRandomIndex(carbsAmount)]
+            ]
+
+            return course.join(', ')
         }
 
         if (day === 'thursday') {
@@ -42,7 +48,13 @@ class Mainscreen extends React.Component<MainscreenProps, MainscreenState> {
         }
 
         if (day === 'friday') {
-            return fridayCourses[getRandomIndex(fridaysAmount)] + ', ' + sides[getRandomIndex(sidesAmount)] + ', ' + carbs[getRandomIndex(carbsAmount)]
+            var course = [
+                fridayCourses[getRandomIndex(fridaysAmount)],
+                sides[getRandomIndex(sidesAmount)],
+                carbs[getRandomIndex(carbsAmount)]
+            ]
+
+            return course.join(', ')
         }
     }
 
