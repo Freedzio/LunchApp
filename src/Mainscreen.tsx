@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Row, Col, Container } from 'reactstrap'
+import { Row, Col, Container, Form, Button } from 'reactstrap'
 import soups from './database/soups'
 import mainCourses from './database/mainCourses'
 import fridayCourses from './database/fridayCourses'
@@ -10,8 +10,13 @@ import sides from './database/sides'
 import carbs from './database/carbs';
 import GenerateButton from './Button';
 import Menu from './Menu';
+import days from './database/weekDays';
+import courseTypes from './database/courseTypes';
+import CourseTypeSelect from './CourseTypeSelect';
 
 class Mainscreen extends React.Component<MainscreenProps, MainscreenState> {
+    courseTypesArray: string[]
+
     constructor(props: any) {
         super(props);
 
@@ -20,10 +25,20 @@ class Mainscreen extends React.Component<MainscreenProps, MainscreenState> {
             menu: []
         }
 
+        this.courseTypesArray = []
 
-        this.generateLunches = this.generateLunches.bind(this)
-        this.generateDay = this.generateDay.bind(this)
-        this.generateMainCourse = this.generateMainCourse.bind(this)
+        this.generateLunches = this.generateLunches.bind(this);
+        this.generateDay = this.generateDay.bind(this);
+        this.generateMainCourse = this.generateMainCourse.bind(this);
+        this.onCourseTypeChange = this.onCourseTypeChange.bind(this)
+    }
+
+    onCourseTypeChange(courseType: string, index: number) {
+        var newArray = [...this.courseTypesArray]
+
+        newArray[index] = courseType
+
+        this.courseTypesArray = newArray
     }
 
     generateMainCourse(day?: string) {
@@ -62,6 +77,12 @@ class Mainscreen extends React.Component<MainscreenProps, MainscreenState> {
         var soupsAmount = soups.length
         var vegeAmount = vege.length
 
+        for (var i = 0; i < days.length; i++) {
+            if (this.courseTypesArray[i] === 'Garmażeria' || this.courseTypesArray[i] === 'Makarony') {
+
+            }
+        }
+
         return {
             soup: soups[getRandomIndex(soupsAmount)],
             main: this.generateMainCourse(day),
@@ -89,6 +110,14 @@ class Mainscreen extends React.Component<MainscreenProps, MainscreenState> {
             <Container className='centered'>
                 <Row className='child text-center'>
                     <Col lg='12'>
+                        {!this.state.generated &&
+                            <Form>
+                                {days.map((day, index) =>
+                                    <CourseTypeSelect key={index} day={day} courses={courseTypes} onCourseTypeChange={(courseType: string) =>
+                                        this.onCourseTypeChange(courseType, index)} />
+                                )}
+                            </Form>
+                        }
                         <GenerateButton generateLunches={this.generateLunches} />
                         {!!this.state.generated && <Menu menu={this.state.menu} />}
                     </Col>
