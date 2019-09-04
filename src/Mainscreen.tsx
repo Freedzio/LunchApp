@@ -161,7 +161,8 @@ class Mainscreen extends React.Component<MainscreenProps, MainscreenState> {
         }
 
         for (var i = 0; i < this.state.courseTypes.length; i++) {
-            if (!this.state.courseTypes[i]) {
+            if (!this.state.courseTypes[i] ||
+                this.state.courseTypes[i] === 'Wybierz typ dania') {
                 this.setState({
                     error: true
                 });
