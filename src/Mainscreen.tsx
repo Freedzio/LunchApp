@@ -147,25 +147,31 @@ class Mainscreen extends React.Component<MainscreenProps, MainscreenState> {
         }
     }
 
-    validateCourseTypes() {
-        this.setState({
+    async validateCourseTypes() {
+        await this.setState({
             error: false
         })
 
+        if (this.state.courseTypes.length < 5) {
+            this.setState({
+                error: true
+            });
+
+            return
+        }
+
         for (var i = 0; i < this.state.courseTypes.length; i++) {
-            if (this.state.courseTypes.length === 0 ||
-                !this.state.courseTypes[i]) {
-                
+            if (!this.state.courseTypes[i]) {
                 this.setState({
                     error: true
-                })
+                });
 
                 return
             }
         }
 
         if (!this.state.error) {
-            this.generateLunches()
+            await this.generateLunches()
         }
     }
 
@@ -188,8 +194,6 @@ class Mainscreen extends React.Component<MainscreenProps, MainscreenState> {
 
             this.setState(newState)
         }
-
-        console.log(this.state)
     }
 
     render() {
