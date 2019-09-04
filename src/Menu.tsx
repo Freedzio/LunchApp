@@ -1,10 +1,11 @@
 import * as React from 'react'
 import days from './database/weekDays';
+import dayProps from './dayProps';
 
 const Menu = (props: any) => (    
         <div>
-            {props.menu.map((day: any, index: number) =>
-                <div>
+            {props.menu.map((day: dayProps, index: number) =>
+                <div key={index}>
                     <p className='font-weight-bold'>{days[index]}</p>
                     <p>{day.soup}</p>
                     <p>{day.main}</p>

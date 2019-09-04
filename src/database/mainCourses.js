@@ -1,32 +1,4 @@
 var mainCourses = [
-    'Kotlet mielony',
-    'Nuggetsy z kurczaka',
-    'Potrawka z kurczaka',
-    'Pieczone udko kurczaka',
-    'Pulpety wieprzowe w sosie pomidorowym',
-    'Gulasz wołowy',
-    'Kotlet de volaille',
-    'Pulled pork',
-    'Duszona wątróbka',
-    'Polędwiczka wieprzowa w sosie grzybowym',
-    'Sznycel z indyka',
-    'Kotlet słoneczny',
-    'Pierś kurczaka zapiekana z mozzarellą i pomidorami',
-    'Rumsztyk wołowy z cebulą',
-    'Kotlet drobiowy',
-    'Schab w sosie pieczeniowym',
-    'Schab z majerankiem i czosnkiem',
-    'Strogonov',
-    'Schab nadziewany śliwką',
-    'Zrazik wieprzowy',
-    'Kotlet schabowy',
-    'Quesadilla z kurczakiem',
-    'Pieczona karkówka w sosie własnym',
-    'Kurczak po chińsku',
-    'Burrito z kurczakiem',
-    'Pieczona golonka z indyka w sosie porzeczkowym',
-    'Żołądki drobiowe',
-    'Żeberka wieprzowe w sosie BBQ'
 ]
 
 export default mainCourses
