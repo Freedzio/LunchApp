@@ -1,11 +1,8 @@
 import * as React from 'react'
-import { Row, Col, Container, Form, Button } from 'reactstrap'
+import { Row, Col, Container, Form } from 'reactstrap'
 import soups from './database/soups'
-import mainCourses from './database/mainCourses'
-import fridayCourses from './database/fridayCourses'
 import vege from './database/vege'
 import getRandomIndex from './common/getRandomIndex'
-import thursdayCourses from './database/thursdayCourses'
 import sides from './database/sides'
 import carbs from './database/carbs';
 import GenerateButton from './Button';
@@ -13,6 +10,14 @@ import Menu from './Menu';
 import days from './database/weekDays';
 import courseTypes from './database/courseTypes';
 import CourseTypeSelect from './CourseTypeSelect';
+import beef from './database/beef';
+import chicken from './database/chicken';
+import delicatessen from './database/delicatessen';
+import fish from './database/fish';
+import offal from './database/offal';
+import pasta from './database/pasta';
+import pork from './database/pork';
+import turkey from './database/turkey';
 
 class Mainscreen extends React.Component<MainscreenProps, MainscreenState> {
     courseTypesArray: string[]
@@ -22,7 +27,9 @@ class Mainscreen extends React.Component<MainscreenProps, MainscreenState> {
 
         this.state = {
             generated: false,
-            menu: []
+            menu: [],
+            error: false,
+            courseTypes: []
         }
 
         this.courseTypesArray = []
@@ -30,79 +37,159 @@ class Mainscreen extends React.Component<MainscreenProps, MainscreenState> {
         this.generateLunches = this.generateLunches.bind(this);
         this.generateDay = this.generateDay.bind(this);
         this.generateMainCourse = this.generateMainCourse.bind(this);
-        this.onCourseTypeChange = this.onCourseTypeChange.bind(this)
+        this.onCourseTypeChange = this.onCourseTypeChange.bind(this);
+        this.validateCourseTypes = this.validateCourseTypes.bind(this)
     }
 
     onCourseTypeChange(courseType: string, index: number) {
-        var newArray = [...this.courseTypesArray]
+        var newArray = [...this.state.courseTypes]
 
         newArray[index] = courseType
 
-        this.courseTypesArray = newArray
+        var newState = this.state
+
+        newState = {
+            ...newState,
+            courseTypes: newArray
+        }
+
+        this.setState(newState)
     }
 
-    generateMainCourse(day?: string) {
-        var mainsAmount = mainCourses.length
-        var thursdaysAmount = thursdayCourses.length
-        var fridaysAmount = fridayCourses.length
+    generateMainCourse(courseType: string) {
+        var beefAmount = beef.length
+        var chickenAmount = chicken.length
+        var delicatessenAmount = delicatessen.length
+        var fishAmount = fish.length
+        var offalAmount = offal.length
+        var pastaAmount = pasta.length
+        var porkAmount = pork.length
+        var turkeyAmount = turkey.length
         var sidesAmount = sides.length
         var carbsAmount = carbs.length
 
-        if (day === undefined) {
-            var course = [
-                mainCourses[getRandomIndex(mainsAmount)],
-                sides[getRandomIndex(sidesAmount)],
-                carbs[getRandomIndex(carbsAmount)]
+        var course = [
+            sides[getRandomIndex(sidesAmount)],
+            carbs[getRandomIndex(carbsAmount)]
+        ]
+
+        if (courseType === 'Kurczak') {
+            course = [
+                chicken[getRandomIndex(chickenAmount)],
+                ...course
             ]
 
             return course.join(', ')
         }
 
-        if (day === 'thursday') {
-            return thursdayCourses[getRandomIndex(thursdaysAmount)]
+        if (courseType === 'Indyk') {
+            course = [
+                turkey[getRandomIndex(turkeyAmount)],
+                ...course
+            ]
+
+            return course.join(', ')
         }
 
-        if (day === 'friday') {
-            var course = [
-                fridayCourses[getRandomIndex(fridaysAmount)],
-                sides[getRandomIndex(sidesAmount)],
-                carbs[getRandomIndex(carbsAmount)]
+        if (courseType === 'Wołowina') {
+            course = [
+                beef[getRandomIndex(beefAmount)],
+                ...course
+            ]
+
+            return course.join(', ')
+        }
+
+        if (courseType === 'Wieprzowina') {
+            course = [
+                pork[getRandomIndex(porkAmount)],
+                ...course
+            ]
+
+            return course.join(', ')
+        }
+
+        if (courseType === 'Ryba') {
+            course = [
+                fish[getRandomIndex(fishAmount)],
+                ...course
+            ]
+
+            return course.join(', ')
+        }
+
+        if (courseType === 'Garmażeria') {
+            return delicatessen[getRandomIndex(delicatessenAmount)]
+        }
+
+        if (courseType === 'Makarony') {
+            return pasta[getRandomIndex(pastaAmount)]
+        }
+
+        if (courseType === 'Podroby') {
+            course = [
+                offal[getRandomIndex(offalAmount)],
+                ...course
             ]
 
             return course.join(', ')
         }
     }
 
-    generateDay(day?: string) {
+    generateDay(courseType: string) {
         var soupsAmount = soups.length
         var vegeAmount = vege.length
 
-        for (var i = 0; i < days.length; i++) {
-            if (this.courseTypesArray[i] === 'Garmażeria' || this.courseTypesArray[i] === 'Makarony') {
-
-            }
-        }
-
         return {
             soup: soups[getRandomIndex(soupsAmount)],
-            main: this.generateMainCourse(day),
+            main: this.generateMainCourse(courseType),
             vege: vege[getRandomIndex(vegeAmount)]
         }
     }
 
-    generateLunches() {
-        var stateProps = {
-            generated: true,
-            menu: [
-                this.generateDay(),
-                this.generateDay(),
-                this.generateDay(),
-                this.generateDay('thursday'),
-                this.generateDay('friday')
-            ]
+    validateCourseTypes() {
+        this.setState({
+            error: false
+        })
+
+        for (var i = 0; i < this.state.courseTypes.length; i++) {
+            if (this.state.courseTypes.length === 0 ||
+                !this.state.courseTypes[i]) {
+                
+                this.setState({
+                    error: true
+                })
+
+                return
+            }
         }
 
-        this.setState(stateProps)
+        if (!this.state.error) {
+            this.generateLunches()
+        }
+    }
+
+    generateLunches() {
+        var menu = []
+
+        for (var i = 0; i < this.state.courseTypes.length; i++) {
+            menu.push(this.generateDay(this.state.courseTypes[i]))
+        }
+
+        if (!this.state.error) {
+            var newState = this.state
+
+            newState = {
+                ...newState,
+                generated: true,
+                menu: menu,
+                error: false
+            }
+
+            this.setState(newState)
+        }
+
+        console.log(this.state)
     }
 
     render() {
@@ -118,7 +205,8 @@ class Mainscreen extends React.Component<MainscreenProps, MainscreenState> {
                                 )}
                             </Form>
                         }
-                        <GenerateButton generateLunches={this.generateLunches} />
+                        {!!this.state.error && <div>Wybierz danie na każdy dzień!</div>}
+                        <GenerateButton generateLunches={this.validateCourseTypes} />
                         {!!this.state.generated && <Menu menu={this.state.menu} />}
                     </Col>
                 </Row>
@@ -133,7 +221,9 @@ interface MainscreenProps {
 
 interface MainscreenState {
     generated: boolean,
-    menu: any[]
+    menu: any[],
+    error: boolean,
+    courseTypes: string[]
 }
 
 export default Mainscreen

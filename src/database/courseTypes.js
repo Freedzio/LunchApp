@@ -1,10 +1,12 @@
 var courseTypes = [
     'Kurczak',
+    'Indyk',
     'Wołowina',
     'Wieprzowina',
     'Ryba',
     'Garmażeria',
-    'Makarony'
+    'Makarony',
+    'Podroby'
 ]
 
 export default courseTypes

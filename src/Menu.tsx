@@ -5,7 +5,7 @@ import dayProps from './dayProps';
 const Menu = (props: any) => (    
         <div>
             {props.menu.map((day: dayProps, index: number) =>
-                <div>
+                <div key={index}>
                     <p className='font-weight-bold'>{days[index]}</p>
                     <p>{day.soup}</p>
                     <p>{day.main}</p>
