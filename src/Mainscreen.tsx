@@ -18,10 +18,9 @@ import offal from './database/offal';
 import pasta from './database/pasta';
 import pork from './database/pork';
 import turkey from './database/turkey';
+import EditModal from './EditModal'
 
 class Mainscreen extends React.Component<MainscreenProps, MainscreenState> {
-    courseTypesArray: string[]
-
     constructor(props: any) {
         super(props);
 
@@ -29,20 +28,30 @@ class Mainscreen extends React.Component<MainscreenProps, MainscreenState> {
             generated: false,
             menu: [],
             error: false,
-            courseTypes: []
-        }
+            courseTypes: [],
+            dayEdited: 88,
+            isEditing: false,
 
-        this.courseTypesArray = []
+        }
 
         this.generateLunches = this.generateLunches.bind(this);
         this.generateDay = this.generateDay.bind(this);
         this.generateMainCourse = this.generateMainCourse.bind(this);
         this.onCourseTypeChange = this.onCourseTypeChange.bind(this);
-        this.validateCourseTypes = this.validateCourseTypes.bind(this)
+        this.validateCourseTypes = this.validateCourseTypes.bind(this);
+        this.onDayClick = this.onDayClick.bind(this)
+
+    }
+
+    onDayClick(index: number) {
+        this.setState({
+            dayEdited: index,
+            isEditing: true
+        })
     }
 
     onCourseTypeChange(courseType: string, index: number) {
-        var newArray = [...this.state.courseTypes]
+        var newArray = this.state.courseTypes
 
         newArray[index] = courseType
 
@@ -172,7 +181,7 @@ class Mainscreen extends React.Component<MainscreenProps, MainscreenState> {
         }
 
         if (!this.state.error) {
-            await this.generateLunches()
+            this.generateLunches()
         }
     }
 
@@ -205,14 +214,25 @@ class Mainscreen extends React.Component<MainscreenProps, MainscreenState> {
                         {!this.state.generated &&
                             <Form>
                                 {days.map((day, index) =>
-                                    <CourseTypeSelect key={index} day={day} courses={courseTypes} onCourseTypeChange={(courseType: string) =>
-                                        this.onCourseTypeChange(courseType, index)} />
+                                    <CourseTypeSelect
+                                        key={index}
+                                        day={day}
+                                        courses={courseTypes}
+                                        onCourseTypeChange={(courseType: string) =>
+                                            this.onCourseTypeChange(courseType, index)} />
                                 )}
                             </Form>
                         }
                         {!!this.state.error && <div>Wybierz danie na każdy dzień!</div>}
                         <GenerateButton generateLunches={this.validateCourseTypes} />
-                        {!!this.state.generated && <Menu menu={this.state.menu} />}
+                        {!!this.state.generated &&
+                            <Menu
+                                menu={this.state.menu}
+                                onDayClick={this.onDayClick}
+                            />}
+                        <EditModal
+                            isOpen={this.state.isEditing}
+                            dayEdited={this.state.dayEdited} />
                     </Col>
                 </Row>
             </Container>
@@ -228,7 +248,9 @@ interface MainscreenState {
     generated: boolean,
     menu: any[],
     error: boolean,
-    courseTypes: string[]
+    courseTypes: string[],
+    dayEdited: number,
+    isEditing: boolean
 }
 
 export default Mainscreen
