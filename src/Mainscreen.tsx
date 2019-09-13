@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Row, Col, Container, Form } from 'reactstrap'
+import { Row, Col, Container, Form, Button } from 'reactstrap'
 import soups from './database/soups'
 import vege from './database/vege'
 import getRandomIndex from './common/getRandomIndex'
@@ -29,7 +29,7 @@ class Mainscreen extends React.Component<MainscreenProps, MainscreenState> {
             menu: [],
             error: false,
             courseTypes: [],
-            dayEdited: 88,
+            dayEdited: 0,
             isEditing: false,
 
         }
@@ -39,15 +39,17 @@ class Mainscreen extends React.Component<MainscreenProps, MainscreenState> {
         this.generateMainCourse = this.generateMainCourse.bind(this);
         this.onCourseTypeChange = this.onCourseTypeChange.bind(this);
         this.validateCourseTypes = this.validateCourseTypes.bind(this);
-        this.onDayClick = this.onDayClick.bind(this)
+        this.onDayToggle = this.onDayToggle.bind(this)
 
     }
 
-    onDayClick(index: number) {
-        this.setState({
+    async onDayToggle(index: number) {
+        await this.setState({
             dayEdited: index,
-            isEditing: true
+            isEditing: !this.state.isEditing
         })
+
+        console.log(this.state.dayEdited)
     }
 
     onCourseTypeChange(courseType: string, index: number) {
@@ -228,11 +230,14 @@ class Mainscreen extends React.Component<MainscreenProps, MainscreenState> {
                         {!!this.state.generated &&
                             <Menu
                                 menu={this.state.menu}
-                                onDayClick={this.onDayClick}
+                                onDayClick={this.onDayToggle}
                             />}
-                        <EditModal
+                        {!!this.state.generated && <EditModal
                             isOpen={this.state.isEditing}
-                            dayEdited={this.state.dayEdited} />
+                            dayEdited={this.state.dayEdited}
+                            toggle={this.onDayToggle}
+                            menu={this.state.menu} />}
+                            <Button onClick={() => console.log(this.state.menu)}>Dupnij se loga</Button>
                     </Col>
                 </Row>
             </Container>
