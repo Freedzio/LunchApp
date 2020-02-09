@@ -204,6 +204,9 @@ class Mainscreen extends React.Component<MainscreenProps, MainscreenState> {
                     <Col lg='12'>
                         {!this.state.generated &&
                             <Form>
+                                <div>
+                                    eloeloelo
+                                </div>
                                 {days.map((day, index) =>
                                     <CourseTypeSelect key={index} day={day} courses={courseTypes} onCourseTypeChange={(courseType: string) =>
                                         this.onCourseTypeChange(courseType, index)} />
